@@ -11,7 +11,7 @@
 |
 */
 Auth::routes();
-Route::get('/', 'HomeController@index');
+Route::get('https://stem-sacoda.herokuapp.com/', 'HomeController@index');
 Route::get('dashboard', 'HomeController@index');
 Route::get('students', 'StudentsController@index');
 Route::get('busaries/NCMA', 'BusariesController@ncma');
