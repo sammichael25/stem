@@ -42,7 +42,7 @@ class StudentsController extends Controller
     public function create()
     {
         //
-        $schools = School::orderBy('name', 'asc')->get();
+        $schools = School::where('id','<','900')->orderBy('name', 'asc')->get();
         $cities = City::orderBy('name', 'asc')->get();
         $stemcenters = Stemcenter::orderBy('name', 'asc')->get();
         return view('student.studentform',compact('cities','schools','stemcenters'));
@@ -203,7 +203,7 @@ class StudentsController extends Controller
     {
         //
         $student = Student::where('id', $student->id )->first();
-        $schools = School::orderBy('name', 'asc')->get();
+        $schools = School::where('id','<','900')->orderBy('name', 'asc')->get();
         $cities = City::orderBy('name', 'asc')->get();
         $stemcenters = Stemcenter::orderBy('name', 'asc')->get();
         $shirts = array("X-Small", "Small", "Medium", "Large", "X-Large");
