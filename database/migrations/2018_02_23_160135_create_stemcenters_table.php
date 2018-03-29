@@ -18,10 +18,11 @@ class CreateStemcentersTable extends Migration
             $table->string('name');
             $table->string('type');
             $table->string('wifiPassword')->nullable();
-            $table->integer('males');
-            $table->integer('females');
-            $table->integer('busary')->nullable();
-            $table->integer('last_session_total');
+            $table->integer('males')->default('0');
+            $table->integer('females')->default('0');
+            $table->integer('busary')->default('0')->nullable();
+            $table->integer('incidents')->default('0');
+            $table->integer('last_session_total')->default('0');
             $table->date('last_session');
             $table->integer('school_id')->unsigned()->index()->nullable();
             $table->foreign('school_id')->references('id')->on('schools');

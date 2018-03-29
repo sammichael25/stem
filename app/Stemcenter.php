@@ -16,6 +16,7 @@ class Stemcenter extends Model
         'males',
         'females',
         'busary',
+        'incidents',
         'last_session_total',
         'last_session',
         'school_id'

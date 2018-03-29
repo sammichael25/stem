@@ -123,12 +123,12 @@
                         <div class="collapse" id="centers" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('/')}}" style="background-color: rgba(0,0,0,.075);">
+                                    <a href="{{ url('/stemcenters/support')}}" style="background-color: rgba(0,0,0,.075);">
                                         <p>Student Support</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('/')}}" style="background-color: rgba(0,0,0,.075);">
+                                    <a href="{{ url('/stemcenters/technical')}}" style="background-color: rgba(0,0,0,.075);">
                                         <p>Technical Training</p>
                                     </a>
                                 </li>

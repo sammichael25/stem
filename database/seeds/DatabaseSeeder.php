@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
                         $schools_data->rotation = $data [2];
                         $schools_data->save ();
                     }
+                    if($data[3] != NULL && $data[9] != NULL){
                     $contact_data = new Contact ();
                     $contact_data->id = $data [3];
                     $contact_data->mobile1 = $data [4];
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
                     $scontact_data->school_id = $data [13];
                     $scontact_data->contact_id = $data [14];
                     $scontact_data->save ();
+                    }
                }else {
                     //echo($count);
                     //$count++;
@@ -75,9 +77,10 @@ class DatabaseSeeder extends Seeder
                     $stemcenter_data->males = $data [4];
                     $stemcenter_data->females = $data [5];
                     $stemcenter_data->busary = $data [6];
-                    $stemcenter_data->last_session_total = $data [7];
-                    $stemcenter_data->last_session = $data [8];
-                    $stemcenter_data->school_id = $data [9];
+                    $stemcenter_data->incidents = $data [7];
+                    $stemcenter_data->last_session_total = $data [8];
+                    $stemcenter_data->last_session = $data [9];
+                    $stemcenter_data->school_id = $data [10];
                     $stemcenter_data->save ();
                 }
             }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Stemcenter;
+
 use Illuminate\Http\Request;
 
 class StemcentersController extends Controller
@@ -14,6 +16,30 @@ class StemcentersController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function support()
+    {
+        //
+        $stemcenters = Stemcenter::where('type', '=', 'Student Support')->get();
+        return view('center.centers',['stemcenters'=>$stemcenters]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function technical()
+    {
+        //
+        $stemcenters = Stemcenter::where('type', '=', 'Technical Training')->get();
+        return view('center.centers',['stemcenters'=>$stemcenters]);
     }
 
     /**
@@ -43,9 +69,11 @@ class StemcentersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stemcenter $stemcenter)
     {
         //
+        $stemcenter = Stemcenter::find($stemcenter->id);
+        return view('center.center',['stemcenter'=>$stemcenter]);
     }
 
     /**

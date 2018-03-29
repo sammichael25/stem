@@ -17,45 +17,33 @@
                         <table class="table" id="stemcentersDatatable" data-toggle="table" data-show-columns="true" data-search="true" data-show-toggle="true" data-show-export="true" data-pagination="true" data-buttons-class="info" data-export-options='{"fileName": "test"}' data-export-types="['csv', 'txt', 'sql', 'excel']">
                             <thead class="text-primary">
                             <th data-sortable="true" data-field="name">Name of Stem Center</th>
-                            <th data-sortable="true" data-field="mname">Middle Name</th>
-                            <th data-sortable="true" data-field="lname">Last Name</th>
-                            <th data-sortable="true" data-field="sex">Sex</th>
-                            <th data-sortable="true" data-field="degree">Degree</th>
-                            <th data-sortable="true" data-field="contact">Contact</th>
-                            <th data-sortable="true" data-field="driver">Driver</th>
-                            <th data-sortable="true" data-field="status">Status</th>
-                            <th>Action</th>
+                            <th data-sortable="true" >Wifi</th>
+                            <th data-sortable="true" data-field="males">Registered Males</th>
+                            <th data-sortable="true" data-field="females">Registered Females</th>
+                            <th data-sortable="true" data-field="busary">Busary Students</th>
+                            <th data-sortable="true" data-field="incidents">Incidents</th>
+                            <th data-sortable="true" data-field="last_session">Last Session Date</th>
+                            <th>View</th>
                             </thead>
                             <tbody>
-                            @foreach($employees as $employee)
+                            @foreach($stemcenters as $stemcenter)
                                 <tr>
-                                    <td>{{ $employee->fname }}</td>
-                                    <td>{{ $employee->mname }}</td>
-                                    <td>{{ $employee->lname }}</td>
-                                    <td>{{ $employee->sex }}</td>
-                                    <td>{{ $employee->degree }}</td>
-                                    <td>{{ $employee->contact->mobile1 }}</td>
-                                    <td>{{ $employee->driver }}</td>
-                                    @if($employee->status == 'Active')                                    
-                                        <td class="success">{{ $employee->status }}</td>   
+                                    <td>{{ $stemcenter->name }}</td>
+                                    @if($stemcenter->wifiPassword != '')                                    
+                                        <td class="success">Yes</td>   
                                     @else
-                                        <td class="danger">{{ $employee->status }}</td>
+                                        <td class="danger">No</td>
                                     @endif
+                                    <td>{{ $stemcenter->males }}</td>
+                                    <td>{{ $stemcenter->females }}</td>
+                                    <td>{{ $stemcenter->busary }}</td>
+                                    <td>{{ $stemcenter->incidents }}</td>
+                                    <td>{{ $stemcenter->last_session }}</td>
                                     <td class="td-actions ">
-                                        <button type="button" onclick="edit({{$employee->id}})" rel="tooltip" title="" class="btn btn-primary btn-simple btn-xs" data-original-title="Edit">
-                                            <i class="material-icons">edit</i>
-                                            <div class="ripple-container"></div></button>
-                                        <button type="button" onclick="dprompt();"
-                                                rel="tooltip" title="" class="btn btn-danger btn-simple btn-xs" data-original-title="Remove">
-                                            <i class="material-icons">close</i>
+                                        <button type="button" onclick="show({{$stemcenter->id}})" rel="tooltip" title="" class="btn btn-primary btn-simple btn-xs" data-original-title="Show">
+                                            <i class="material-icons">open_in_new</i>
+                                            <div class="ripple-container"></div>
                                         </button>
-
-                                        <form id="delete-form" action="{{route('employees.destroy',[$employee->id])}}"
-                                        method="post" style="display: none;">
-                                            <input type="hidden" name="_method" value="delete">
-                                            {{csrf_field()}}
-
-                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -74,33 +62,13 @@
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-print-1.5.1/r-2.2.1/sc-1.4.3/datatables.min.js"></script> -->
     <script>
         $(document).ready(function() {
-            //$('#employeeDatatable').DataTable();
+            $('#stemcentersDatatable').DataTable();
         } );
     </script>
     <script type="text/javascript">
-        function edit(id){
-            return location.href='/employees/'+id+'/edit';
+        function show(id){
+            return location.href='/stemcenters/'+id;
         }
-
-        function destroy(id){
-            return location.href='/employees/'+id;
-        }
-    </script>
-    <script>
-        function dprompt() {
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then(function() {
-                    event.preventDefault();
-                    document.getElementById('delete-form').submit();
-                });
-        };
     </script>
     <!-- Latest compiled and minified Locales -->
     <script src="{{ url('js/bootstrap-table.js') }}"></script>

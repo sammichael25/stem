@@ -169,7 +169,25 @@ class StudentsController extends Controller
                 'yr'=> $request->input('stem_yr'),
                 'student_id'=>$student->id
             ]);
-            
+            $center = Stemcenter::where('id', $student->addition->stemcenter_id)->first();
+            $males = $center->males;
+            $females = $center->females;
+            $busary = $center->busary;
+            if($student->sex === 'Male'){
+                $center->update([
+                    'males'=> $males + 1
+                ]);
+            }else{
+                $center->update([
+                    'females'=> $females + 1
+                ]);
+            }
+
+            if($student->addition->type === 'Busary'){
+                $center->update([
+                    'busary'=> $busary + 1
+                ]);
+            }
 
             if($paddress && $pcontact && $parent &&  $st_address && $st_contact && $student && $addition && $emgccontact && $emgc){
                 return redirect()->route('students.create')
@@ -346,6 +364,31 @@ class StudentsController extends Controller
                 'yr'=> $request->input('stem_yr'),
                 'student_id'=>$student->id
             ]);
+            $center = Stemcenter::where('id', $student->addition->stemcenter_id)->first();
+            $males = $center->males;
+            $females = $center->females;
+            $busary = $center->busary;
+            if($student->sex === 'Male'){
+                $center->update([
+                    'males'=> ($males) + 1,
+                    'females'=> ($females) - 1
+                ]);
+            }else{
+                $center->update([
+                    'females'=> ($females) + 1,
+                    'males'=> ($males) - 1
+                ]);
+            }
+
+            if($student->addition->type === 'Busary'){
+                $center->update([
+                    'busary'=> ($busary) + 1
+                ]);
+            }else{
+                $center->update([
+                    'busary'=> ($busary) - 1
+                ]);
+            }
 
         if ($paddress && $pcontact && $parent &&  $st_address && $st_contact && $student && $addition && $emgccontact && $emgc){
             return redirect()->route('students.edit', ['student'=> $student->id])
@@ -367,6 +410,25 @@ class StudentsController extends Controller
         //dd($student);
         $findStudent = Student::find($student->id);
         if($findStudent->delete()){
+            $center = Stemcenter::where('id', $student->addition->stemcenter_id)->first();
+            $males = $center->males;
+            $females = $center->females;
+            $busary = $center->busary;
+            if($student->sex === 'Male'){
+                $center->update([
+                    'males'=> ($males) - 1
+                ]);
+            }else{
+                $center->update([
+                    'females'=> ($females) - 1
+                ]);
+            }
+
+            if($student->addition->type === 'Busary'){
+                $center->update([
+                    'busary'=> ($busary) - 1
+                ]);
+            }
             //redirect
             return redirect()->route('students.index')
                 ->with('success' , 'Student deleted successfully');

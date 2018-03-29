@@ -19,6 +19,8 @@ Route::get('busaries/ECMA', 'BusariesController@ecma');
 Route::get('busaries/CBLOCK', 'BusariesController@cblock');
 Route::get('/employees/facilitators', 'EmployeesController@facilitators');
 Route::get('/employees/supportStaff', 'EmployeesController@supportStaff');
+Route::get('/stemcenters/support', 'StemcentersController@support');
+Route::get('/stemcenters/technical', 'StemcentersController@technical');
 
 
 
@@ -26,6 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('students', 'StudentsController');
 Route::resource('employees', 'EmployeesController');
+Route::resource('stemcenters', 'StemcentersController');
 
 
 

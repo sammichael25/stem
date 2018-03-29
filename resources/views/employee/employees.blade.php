@@ -78,7 +78,7 @@
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/b-1.5.1/b-colvis-1.5.1/b-flash-1.5.1/b-print-1.5.1/r-2.2.1/sc-1.4.3/datatables.min.js"></script> -->
     <script>
         $(document).ready(function() {
-            //$('#employeeDatatable').DataTable();
+            $('#employeeDatatable').DataTable();
         } );
     </script>
     <script type="text/javascript">
