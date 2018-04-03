@@ -243,7 +243,24 @@ class StudentsController extends Controller
     {
         //
         if(Auth::check()){
-                
+            $orgStSex = $student->sex;
+            $orgStType = $student->addition->type;
+            $orgCenter = $student->addition->stemcenter_id;
+            $sexChanged = false;
+            $typeChanged = false;
+            $centerChanged = false;
+            if ($orgStSex != $request->input('sex') ){
+                $sexChanged = true;
+            }
+
+            if ($orgStType != $request->input('s_type') ){
+                $typeChanged = true;
+            }
+
+            if ($orgCenter != $request->input('center') ){
+                $centerChanged = true;
+            }
+
             $paddress = Address::where('id', $student->pareent[0]->address->id)
             ->update([
                 'address1'=> $request->input('1add1'),
@@ -368,26 +385,90 @@ class StudentsController extends Controller
             $males = $center->males;
             $females = $center->females;
             $busary = $center->busary;
-            if($student->sex === 'Male'){
-                $center->update([
-                    'males'=> ($males) + 1,
-                    'females'=> ($females) - 1
-                ]);
-            }else{
-                $center->update([
-                    'females'=> ($females) + 1,
-                    'males'=> ($males) - 1
-                ]);
-            }
+            if($centerChanged){
+                $newCenter = Stemcenter::where('id', $request->input('center') )->first();
+                $newMales = $newCenter->males;
+                $newFemales = $newCenter->females;
+                $newBusary = $newCenter->busary;
+                if($request->input('sex') === 'Male'){
+                    $newCenter->update([
+                        'males'=> ($newMales) + 1
+                    ]);
+                    if($sexChanged){
+                        $center->update([
+                            'females'=> ($females) - 1
+                        ]);
+                    }else{
+                        $center->update([
+                            'males'=> ($males) - 1
+                        ]);
+                    }
+                }else{
+                    $newCenter->update([
+                        'females'=> ($newFemales) + 1
+                    ]);
+                    if($sexChanged){
+                        $center->update([
+                            'males'=> ($males) - 1
+                        ]);
+                    }else{
+                        $center->update([
+                            'females'=> ($females) - 1
+                        ]);
+                    }
+                }
 
-            if($student->addition->type === 'Busary'){
-                $center->update([
-                    'busary'=> ($busary) + 1
-                ]);
+                if($typeChanged === false){
+                    if($request->input('s_type') === 'Busary'){
+                        $newCenter->update([
+                            'busary'=> ($newBusary) + 1
+                        ]);
+                        $center->update([
+                        'busary'=> ($busary) - 1
+                        ]);
+                    }
+                }else if ($typeChanged){
+                    if($request->input('s_type') === 'Busary'){
+                        $newCenter->update([
+                            'busary'=> ($newBusary) + 1
+                        ]);
+                    }else if($request->input('s_type') === 'Academic' && $orgStType === 'Busary'){
+                        $center->update([
+                        'busary'=> ($busary) - 1
+                        ]);
+                    }else if($request->input('s_type') === 'Technical' && $orgStType === 'Busary'){
+                        $center->update([
+                        'busary'=> ($busary) - 1
+                        ]);
+                    }
+                }
+                    
             }else{
-                $center->update([
-                    'busary'=> ($busary) - 1
-                ]);
+                if($sexChanged && $request->input('sex') === 'Male'){
+                    $center->update([
+                        'males'=> ($males) + 1,
+                        'females'=> ($females) - 1
+                    ]);
+                }else if($sexChanged && $request->input('sex') === 'Female'){
+                    $center->update([
+                        'females'=> ($females) + 1,
+                        'males'=> ($males) - 1
+                    ]);
+                }
+
+                if($typeChanged && $request->input('s_type') === 'Busary'){
+                    $center->update([
+                        'busary'=> ($busary) + 1
+                    ]);
+                }else if($typeChanged && $request->input('s_type') === 'Technical'){
+                    $center->update([
+                        'busary'=> ($busary) - 1
+                    ]);
+                }else if($typeChanged && $request->input('s_type') === 'Academic'){
+                    $center->update([
+                        'busary'=> ($busary) - 1
+                    ]);
+                }
             }
 
         if ($paddress && $pcontact && $parent &&  $st_address && $st_contact && $student && $addition && $emgccontact && $emgc){
@@ -409,12 +490,15 @@ class StudentsController extends Controller
     {
         //dd($student);
         $findStudent = Student::find($student->id);
+        $centerId = $student->addition->stemcenter_id;
+        $stSex = $student->sex;
+        $stType = $student->addition->type;
         if($findStudent->delete()){
-            $center = Stemcenter::where('id', $student->addition->stemcenter_id)->first();
+            $center = Stemcenter::where('id', $centerId)->first();
             $males = $center->males;
             $females = $center->females;
             $busary = $center->busary;
-            if($student->sex === 'Male'){
+            if($stSex === 'Male'){
                 $center->update([
                     'males'=> ($males) - 1
                 ]);
@@ -424,7 +508,7 @@ class StudentsController extends Controller
                 ]);
             }
 
-            if($student->addition->type === 'Busary'){
+            if($stType === 'Busary'){
                 $center->update([
                     'busary'=> ($busary) - 1
                 ]);
