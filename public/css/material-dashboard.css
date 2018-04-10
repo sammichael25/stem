@@ -6197,13 +6197,45 @@ h6,
 .footer-big h4 a,
 .media .media-heading,
 .media .media-heading a {
-    color: #ffffff;
+    color: #000000;
     ;
     text-decoration: none;
 }
 
 .card-blog .card-title {
     font-weight: 700;
+}
+
+.ct-label {
+    font-size: 1em !important;
+}
+
+.ct-series-a .ct-pie,
+.ct-series-a .ct-slice-pie {
+    fill: #00bcd4 !important;
+}
+
+
+/*
+.ct-series-b .ct-pie,
+.ct-series-b .ct-slice-pie {
+    fill: green;
+}
+*/
+
+.ct-series-a .ct-line,
+.ct-series-a .ct-point {
+    stroke: #f44336 !important;
+}
+
+.ct-series-b .ct-line,
+.ct-series-b .ct-point {
+    stroke: #00bcd4 !important;
+}
+
+.ct-series-c .ct-line,
+.ct-series-c .ct-point {
+    stroke: #4caf50 !important;
 }
 
 h2.title {
@@ -13069,7 +13101,7 @@ footer .btn {
     transition: background-color .1s .2s;
 }
 
-#mainLogo{
+#mainLogo {
     width: 250px;
     height: auto;
 }

@@ -17,6 +17,10 @@ class CreateStemcentersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
+            $table->string('description')->nullable();
+            $table->string('image_location')->nullable();
+            $table->string('longitude');
+            $table->string('latitude');
             $table->string('wifiPassword')->nullable();
             $table->integer('males')->default('0');
             $table->integer('females')->default('0');

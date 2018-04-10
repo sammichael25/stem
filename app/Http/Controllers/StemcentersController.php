@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Stemcenter;
+use App\Centerattendance;
 
 use Illuminate\Http\Request;
 
@@ -26,6 +27,7 @@ class StemcentersController extends Controller
     public function support()
     {
         //
+        $attendances = Stemcenter::join('centerattendances', 'centerattendances.stemcenter_id', '=', 'stemcenters.id')->where('type', '=', 'Student Support')->orderBy('name', 'asc')->get();
         $stemcenters = Stemcenter::where('type', '=', 'Student Support')->get();
         return view('center.centers',['stemcenters'=>$stemcenters]);
     }
@@ -72,8 +74,19 @@ class StemcentersController extends Controller
     public function show(Stemcenter $stemcenter)
     {
         //
+        $attendances = Centerattendance::where('stemcenter_id', '=', $stemcenter->id)->orderBy('last_session_date', 'asc')->get();
+        $totalAttendances = array();
+        $maleAttendances = array();
+        $femaleAttendances = array();
+        $attendancesDate = array();
+        foreach($attendances as $attendance ){
+            array_push($totalAttendances,$attendance->last_session_total);
+            array_push($maleAttendances,$attendance->last_session_males);
+            array_push($femaleAttendances,$attendance->last_session_females);
+            array_push($attendancesDate,$attendance->last_session_date);
+        }
         $stemcenter = Stemcenter::find($stemcenter->id);
-        return view('center.center',['stemcenter'=>$stemcenter]);
+        return view('center.center',compact('stemcenter','totalAttendances','maleAttendances','femaleAttendances','attendancesDate'));
     }
 
     /**

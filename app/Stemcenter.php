@@ -12,6 +12,10 @@ class Stemcenter extends Model
     protected $fillable = [
         'name',
         'type',
+        'description',
+        'image_location',
+        'longitude',
+        'latitude',
         'wifiPassword',
         'males',
         'females',
@@ -31,6 +35,12 @@ class Stemcenter extends Model
     public function School(){
 
         return $this->belongsTo('App\School');
+
+    }
+
+    public function Centerattendance(){
+
+        return $this->hasMany('App\Centerattendance');
 
     }
 }
