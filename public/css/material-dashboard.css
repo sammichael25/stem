@@ -6197,9 +6197,15 @@ h6,
 .footer-big h4 a,
 .media .media-heading,
 .media .media-heading a {
-    color: #000000;
-    ;
     text-decoration: none;
+}
+
+#stats {
+    color: black;
+}
+
+#timeline-body {
+    text-align: left;
 }
 
 .card-blog .card-title {

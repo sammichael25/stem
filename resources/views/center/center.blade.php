@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">All Students</p>
-                    <h3 class="title">{{ $stemcenter->males + $stemcenter->females}}
+                    <h3 id="stats" class="title">{{ $stemcenter->males + $stemcenter->females}}
                         <small>in total</small>
                     </h3>
                 </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Males</p>
-                    <h3 class="title">{{ $stemcenter->males }}
+                    <h3 id="stats" class="title">{{ $stemcenter->males }}
                         <small>boys</small>
                     </h3>
                 </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Females</p>
-                    <h3 class="title">{{ $stemcenter->females }}
+                    <h3 id="stats" class="title">{{ $stemcenter->females }}
                         <small>girls</small>
                     </h3>
                 </div>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="card-content">
                     <p class="category">Incidents</p>
-                    <h3 class="title">{{ $stemcenter->incidents }}
+                    <h3 id="stats" class="title">{{ $stemcenter->incidents }}
                         <small>reported incidents</small>
                     </h3>
                 </div>
@@ -164,12 +164,122 @@
         </div>
     </div>
     <div class="row">
-        
+        <div class="col-md-12">
+            <div class="card card-stats">
+                <div id="card-header" class="card-header" data-background-color="green">
+                    <i class="material-icons">info</i>
+                </div>
+                
+                <div class="card-content">
+                    <h4 class="card-title">School Info</h4>
+                    <div class="card-body">
+                        <ul class="timeline timeline-simple">
+                            @if($stemcenter->wifiPassword != "")
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge danger">
+                                    <i class="material-icons">card_travel</i>
+                                </div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <span class="badge badge-danger">WiFi Password</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Wifi Password</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$stemcenter->wifiPassword}}</h5>
+                                                </div>
+                                            </div
+                                    </div>
+                                    <h6>
+                                        <i class="material-icons">date_range</i> Last Updated {{ \Carbon\Carbon::parse($stemcenter->updated_at)->diffForHumans()}}
+                                    </h6>
+                                </div>
+                            </li>
+                            @endif
+                            @foreach($liasons as $liason)
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge danger">
+                                        <i class="material-icons">perm_contact_calendar</i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <span class="badge badge-danger">School Liason</span>
+                                        </div>
+                                        <div class="timeline-body" id="timeline-body">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Name</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$liason->fname ." ". $liason->lname }}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Position</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$liason->position}}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Mobile</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$liason->contact->mobile1}}</h5>
+                                                </div>
+                                            </div>
+                                            @if($liason->contact->mobile2 != "" || $liason->contact->mobile2 != NULL)
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Mobile 2</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$liason->contact->mobile2}}</h5>
+                                                </div>
+                                            </div>
+                                            @endif
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <h4>Email</h4>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <h5>{{$liason->contact->email1}}</h5>
+                                                </div>
+                                            </div>
+                                            @if($liason->contact->email2 != "" || $liason->contact->email2 != NULL)
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <h4>Email 2</h4>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <h5>{{$liason->contact->email2}}</h5>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <h6>
+                                            <i class="material-icons">date_range</i> Last Updated {{ \Carbon\Carbon::parse($liason->updated_at)->diffForHumans()}}
+                                        </h6>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 @section('javascripts')
     <script src="{{ url('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
-    <script src="https://maps.googleapis.com/maps/api/js" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDX1K4szggEAHIqEE49daQJle1w9VQT_jo&callback=loadMap"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -184,7 +294,7 @@
        function loadMap(lat,long){
         var myLatlng = new google.maps.LatLng(lat, long);
         var mapOptions = {
-            zoom: 16,
+            zoom: 17,
             center: myLatlng,
             scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
         }

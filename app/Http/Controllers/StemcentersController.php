@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Stemcenter;
 use App\Centerattendance;
+use App\Scontact;
 
 use Illuminate\Http\Request;
 
@@ -83,10 +84,11 @@ class StemcentersController extends Controller
             array_push($totalAttendances,$attendance->last_session_total);
             array_push($maleAttendances,$attendance->last_session_males);
             array_push($femaleAttendances,$attendance->last_session_females);
-            array_push($attendancesDate,$attendance->last_session_date);
+            array_push($attendancesDate,date_format(new \DateTime($attendance->last_session_date),"d/m"));
         }
         $stemcenter = Stemcenter::find($stemcenter->id);
-        return view('center.center',compact('stemcenter','totalAttendances','maleAttendances','femaleAttendances','attendancesDate'));
+        $liasons = Scontact::where('school_id', '=', $stemcenter->school_id)->get();
+        return view('center.center',compact('stemcenter','totalAttendances','maleAttendances','femaleAttendances','attendancesDate','liasons'));
     }
 
     /**
