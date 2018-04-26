@@ -1,8 +1,10 @@
  @extends('layouts.layout')
+
 @section('styles')
 <link rel="stylesheet" href="{{ url('css/fullcalendar.css') }}"/>
 <link rel="stylesheet" href="{{ url('css/fullcalendar.print.css') }}"  media="print"/>
 <link rel="stylesheet" href="{{ url('css/scheduler.css') }}"/>
+<link rel="stylesheet" href="{{ url('css/sweetalert2.css') }}"/>
 @endsection
 
 @section('content')
@@ -13,7 +15,6 @@
                     <div class="panel-heading">Events Schedule</div>
                     <div class="panel-body">
                         <div id='calendar'></div>
-                        @include('partials.modals.createEvent')
                     </div>
                 </div>
             </div>
@@ -24,13 +25,13 @@
 @section('javascripts')
     <script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/moment.min.js') }}" type="text/javascript"></script>
-//    <script src="{{ url('js/fullcalendar.js') }}" type="text/javascript"></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js' type="text/javascript"></script>
+    <script src="{{ url('js/fullcalendar.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/scheduler.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/gcal.js') }}" type="text/javascript"></script>
-    <script src="{{ url('js/material.min.js') }}"></script>
-    <script src="{{ url('js/bootstrap-datetimepicker.js') }}"></script>
-
+    <script src="{{ url('js/sweetalert2.all.min.js') }}"></script>
+    <script src="https://unpkg.com/promise-polyfill@7.1.0/dist/promise.min.js"></script>
+    //<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    //<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#calendar').fullCalendar({
@@ -63,47 +64,31 @@
                 @endforeach
                 ],
                 
-                dayClick: function(date, jsEvent, view) {
-                    $('#createEvent').modal();
-                    $(".modal-body #start_date").val(date.format());
-                    $(".modal-body #end_date").val(date.format());
+                dayClick:async function(date, jsEvent, view) {
+                    const {value: formValues} = await swal({
+                        title: 'New Event',
+                        html:
+                            '<input id="title" class="swal2-input"> Title' +
+                            '<input id="start_date" class="swal2-input"> Start Date'+
+                            '<input id="end_date" class="swal2-input"> End Date',
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            return [
+                            document.getElementById('title').value,
+                            document.getElementById('start_date').value,
+                            document.getElementById('end_date').value
+                            ]
+                        }
+                    });
+                    if (formValues) {
+                        //$('#calendar').fullCalendar('renderEvent', formValues);
+                        swal(JSON.stringify(formValues))
+                    }
+                    
+
                 }
             });
         } );
-    </script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#end_date').datetimepicker({
-                icons: {
-                    date: "fa fa-calendar",
-                    up: "fa fa-chevron-up",
-                    down: "fa fa-chevron-down",
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-screenshot',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-remove'
-                },viewMode: "days",format:"YYYY/MM/DD"
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(function () {
-            $('#start_date').datetimepicker({
-                icons: {
-                    date: "fa fa-calendar",
-                    up: "fa fa-chevron-up",
-                    down: "fa fa-chevron-down",
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-screenshot',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-remove'
-                },viewMode: "days",format:"YYYY/MM/DD"
-            });
-        });
     </script>
 
 @endsection

@@ -190,7 +190,7 @@
                                         <ul class="nav">
                                             <li><a href="#" style="background-color: rgba(0,0,0,.075);">Term 1</a></li>
                                             <li><a href="#" style="background-color: rgba(0,0,0,.075);">Term 2</a></li>
-                                            <li><a href="#" style="background-color: rgba(0,0,0,.075);">Term 3</a></li>
+                                            <li><a href="{{ url('/events') }}" style="background-color: rgba(0,0,0,.075);">Term 3</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -352,32 +352,30 @@
                         <script>
                             document.write(new Date().getFullYear())
                         </script>
-                        <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                        <a href="http://www.sacodaserv.com">Sacodat Serv Ltd.</a> Research, Results, Resolution
                     </p>
                 </div>
             </footer>
         </div>
     </div>
 
+        <script src="{{ url('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
+        <script src="{{ url('js/jquery.validate.min.js') }}" type="text/javascript"></script>
 
-<!--   Core JS Files   -->
-<script src="{{ url('js/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
-<script src="{{ url('js/jquery.validate.min.js') }}" type="text/javascript"></script>
-
-<script src="{{ url('js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ url('js/material.min.js') }}" type="text/javascript"></script>
-<!--  Dynamic Elements plugin -->
-<script src="{{ url('js/arrive.min.js') }}"></script>
-<!--  PerfectScrollbar Library -->
-<script src="{{ url('js/perfect-scrollbar.jquery.min.js') }}"></script>
-<script src="{{ url('js/moment.min.js') }}"></script>
-<script src="{{ url('js/bootstrap-datetimepicker.js') }}"></script>
-<!--  Notifications Plugin    -->
-<script src="{{ url('js/bootstrap-notify.js') }}"></script>
-<!-- Material Dashboard javascript methods -->
-<script src="{{ url('js/material-dashboard.js?v=1.2.0') }}"></script>
-<!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="{{ url('js/demo.js') }}"></script>
-@yield('javascripts')
-</body>
+        <script src="{{ url('js/bootstrap.min.js') }}" type="text/javascript"></script>
+        <script src="{{ url('js/material.min.js') }}" type="text/javascript"></script>
+        <!--  Dynamic Elements plugin -->
+        <script src="{{ url('js/arrive.min.js') }}"></script>
+        <!--  PerfectScrollbar Library -->
+        <script src="{{ url('js/perfect-scrollbar.jquery.min.js') }}"></script>
+        <script src="{{ url('js/moment.min.js') }}"></script>
+        <script src="{{ url('js/bootstrap-datetimepicker.js') }}"></script>
+        <!--  Notifications Plugin    -->
+        <script src="{{ url('js/bootstrap-notify.js') }}"></script>
+        <!-- Material Dashboard javascript methods -->
+        <script src="{{ url('js/material-dashboard.js?v=1.2.0') }}"></script>
+        <!-- Material Dashboard DEMO methods, don't include it in your project! -->
+        <script src="{{ url('js/demo.js') }}"></script>
+        @yield('javascripts')
+    </body>
 </html>
