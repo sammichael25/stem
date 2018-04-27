@@ -21,8 +21,8 @@ Route::get('/employees/facilitators', 'EmployeesController@facilitators');
 Route::get('/employees/supportStaff', 'EmployeesController@supportStaff');
 Route::get('/stemcenters/support', 'StemcentersController@support');
 Route::get('/stemcenters/technical', 'StemcentersController@technical');
-//Route::get('/schedules', 'SchedulesController@index');
-Route::get('/events', 'EventController@index');
+Route::get('/events', 'EventsController@index');
+//Route::put('/events/{events}', 'EventsController@update');
 
 
 
@@ -31,7 +31,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('students', 'StudentsController');
 Route::resource('employees', 'EmployeesController');
 Route::resource('stemcenters', 'StemcentersController');
-//Route::resource('schedules', 'SchedulesController');
+Route::resource('events', 'EventsController');
 
 
 

@@ -43,19 +43,30 @@
                 eventColor: 'blue',
                 selectable:true,
                 editable: true,
-                eventDurationEditable: true,
                 eventDrop: function(event, delta, revertFunc) {
-                
-                    alert(event.title + " was dropped on " + event.start.format());
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
 
-                    if (!confirm("Are you sure about this change?")) {
-                    revertFunc();
-                    }
-
+                    $.ajax({
+                        type:'PUT',
+                        url: '/events/' + event.id,
+                        data: {
+                            'title': event.title,
+                            'start_date': event.start.format(),
+                            'end_date': event.end.format()
+                        },
+                        success: function(data){
+                            alert(data);
+                        }
+                    });
                 },
                 events:[
                     @foreach($events as $event)
                 {
+                    id : '{{ $event->id }}',
                     title : '{{ $event->title }}',
                     start : '{{ $event->start_date }}',
                     end : '{{ $event->end_date }}'
@@ -67,6 +78,11 @@
                     $('#createEvent').modal();
                     $(".modal-body #start_date").val(date.format());
                     $(".modal-body #end_date").val(date.format());
+                },
+                select: function(startDate, endDate) {
+                    $('#createEvent').modal();
+                    $(".modal-body #start_date").val(startDate.format());
+                    $(".modal-body #end_date").val(endDate.format());
                 }
             });
         } );
@@ -105,5 +121,21 @@
             });
         });
     </script>
+
+    <script>
+       /* $(function(){
+            $('#eventsCreate').on('submit', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ route('events.store') }}",
+                    type: "POST",
+                    data: $("#eventsCreate").serialize(),
+                    success: function(data){
+                        alert("Successfully submitted.")
+                    }
+                });
+            }); 
+        });*/
+</script>
 
 @endsection
