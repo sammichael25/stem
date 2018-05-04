@@ -39,10 +39,21 @@
                 <div class="col-8">
                 <div class="input-group">
                     <div class="input-group-addon">
-                    <i class="fa fa-stop"></i>
+                        <i class="fa fa-stop"></i>
                     </div> 
                     <input type="text" id="end_date"  name="end_date" class="form-control datetimepicker"/>
                 </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="color" class="col-4 col-form-label">Color</label> 
+                <div class="col-8">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-paint-brush"></i>
+                        </div> 
+                        <input type="text" name="color" id="color" value="#000000" class="form-control"/>
+                    </div>
                 </div>
             </div>
             

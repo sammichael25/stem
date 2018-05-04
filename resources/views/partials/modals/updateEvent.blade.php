@@ -1,17 +1,16 @@
 <!-- Modal -->
-<div class="modal fade" id="createEvent" tabindex="-1" role="dialog" aria-labelledby="createEventTitle" aria-hidden="true">
+<div class="modal fade" id="updateEvent" tabindex="-1" role="dialog" aria-labelledby="updateEventTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="createEventTitle">Create New Event</h5>
+        <h5 class="modal-title" id="updateEventTitle">Update Event</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="eventsCreate" action="{{ route('events.store') }}" method="POST">
-                    {{ csrf_field() }}
-            <input type="hidden" name="_method" value="post">
+        <form id="eventsUpdate" >
+            <input type="text" id="event_id" name="event_id" class="hidden">
             <div class="form-group row">
                 <label for="title" class="col-4 col-form-label">Title</label> 
                 <div class="col-8">
@@ -45,11 +44,23 @@
                 </div>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="color2" class="col-4 col-form-label">Color</label> 
+                <div class="col-8">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-paint-brush"></i>
+                        </div> 
+                        <input type="text" name="color2" id="color2"  class="form-control"/>
+                    </div>
+                </div>
+            </div>
             
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input id="submit" type="submit" class="btn btn-primary pull-left" value="Add Event"/>
+      <div class="modal-footer text-center">
+        <button id='close' type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+        <button onclick="dprompt()" id="delete" type="button" class="btn btn-danger">Delete Event</button>
+        <button onclick="update()" id="submit" type="button" class="btn btn-primary pull-left">Update</button>
       </div>
       </form>
     </div>

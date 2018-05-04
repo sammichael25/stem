@@ -171,31 +171,12 @@
                         </div>
                     </li>
                     <li>
-                        <a data-toggle="collapse" href="#schedule" aria-expanded="false" class="collapsed">
+                        <a  href="{{ url('/events') }}" >
                             <i class="material-icons">event_note</i>
-                            <p>Schedule
-                                <b class="caret"></b>
-                            </p>
+                            <p>Schedule</p>
 
                         </a>
-                        <div class="collapse" id="schedule" aria-expanded="false" style="height: 0px;background-color: rgba(0,0,0,.075);">
-                            <ul class="nav">
-                                <li><a data-toggle="collapse" href="#year" aria-expanded="false" class="collapsed">
-                                        <p>2017
-                                            <b class="caret"></b>
-                                        </p>
-
-                                    </a>
-                                    <div class="collapse" id="year" aria-expanded="false" style="height: 0px;">
-                                        <ul class="nav">
-                                            <li><a href="#" style="background-color: rgba(0,0,0,.075);">Term 1</a></li>
-                                            <li><a href="#" style="background-color: rgba(0,0,0,.075);">Term 2</a></li>
-                                            <li><a href="{{ url('/events') }}" style="background-color: rgba(0,0,0,.075);">Term 3</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        
                     </li>
                     <li>
                         <a data-toggle="collapse" href="#reports" aria-expanded="false" class="collapsed">

@@ -17,9 +17,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->date('start_date');
-            $table->date('end_date');
-            $table->string('allDay');      /*true/false*/      
-            $table->string('repeating');      /*true/false*/      
+            $table->date('end_date');     /*true/false*/    
             $table->string('color');          /*#ffffff*/  
             $table->timestamps();
         });

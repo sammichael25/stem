@@ -5,9 +5,10 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/jquery.min.js": "/js/jquery.min.js",
+    "/js/bootstrap-colorpicker.js": "/js/bootstrap-colorpicker.js",
     "/js/sweetalert2.all.min.js": "/js/sweetalert2.all.min.js",
     "/css/fullcalendar.css": "/css/fullcalendar.css",
     "/css/fullcalendar.print.css": "/css/fullcalendar.print.css",
     "/css/scheduler.css": "/css/scheduler.css",
-    "/css/sweetalert2.css": "/css/sweetalert2.css"
+    "/css/bootstrap-colorpicker.css": "/css/bootstrap-colorpicker.css"
 }

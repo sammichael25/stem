@@ -41,7 +41,8 @@ class EventsController extends Controller
             $event = Event::create([
                 'title'=> $request->input('title'),
                 'start_date'=> $request->input('start_date'),
-                'end_date'=> $request->input('end_date')
+                'end_date'=> $request->input('end_date'),
+                'color'=> $request->input('color')
             ]);
             if($event){
                 return back()->with('success','Event added');
@@ -83,20 +84,25 @@ class EventsController extends Controller
     {
         //
         if(Auth::check()){
-            //echo($request->input('start_date'));
-            $Newevent = Event::where('id', $id)
+            //echo($id);
+            $event = Event::where('id', $id)
             ->update([
                 'title'=> $request->input('title'),
                 'start_date'=> $request->input('start_date'),
-                'end_date'=> $request->input('end_date')
+                'end_date'=> $request->input('end_date'),
+                'color'=> $request->input('color')
             ]);
-        if($Newevent != null){
-                return redirect()->route('events.index')->with('success','Event updated');
+        if($event){
+                $response = ["success" => 'Event updated'];
+                //return redirect()->route('events.index')->with('success','Event updated');
+                return json_encode($response);
                 //return response()->with('success','Event updated');
             }
+        $response = ["error" => 'Event could not be updated'];
+        return json_encode($response);
         }
-        return back()->withInput('errors' , 'Event could NOT be updated');
-        //echo('error');
+        $response = ["error" => 'You are not authorised to edit data'];
+        return json_encode($response);
     }
 
     /**
@@ -108,6 +114,18 @@ class EventsController extends Controller
     public function destroy($id)
     {
         //
+        if(Auth::check()){
+            $findEvent = Event::find($id);
+            if($findEvent->delete()){
+                $response = ["success" => 'Event deleted'];
+                return json_encode($response);
+            }
+            $response = ["error" => 'Event could not be deleted'];
+            return json_encode($response);
+        }
+        $response = ["error" => 'You are not authorised to delete data'];
+        return json_encode($response);
+
     }
         
 

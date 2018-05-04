@@ -21,6 +21,7 @@
     "vue": "^2.5.16"
   },
   "dependencies": {
+    "bootstrap-colorpicker": "^2.5.2",
     "fullcalendar": "^3.9.0",
     "fullcalendar-scheduler": "^1.9.4",
     "moment": "^2.22.1",
