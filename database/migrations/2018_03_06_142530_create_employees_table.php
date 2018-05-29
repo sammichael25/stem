@@ -16,25 +16,24 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->string('fname');
-            $table->string('mname');
+            $table->string('mname')->nullable();
             $table->string('lname');
             $table->string('sex');
-            $table->date('dob');
-            $table->string('degree');
+            $table->date('dob')->nullable();
+            $table->string('degree')->nullable();
             $table->string('driver');            
             $table->string('status');            
-            $table->string('career');            
-            $table->string('shirt');            
-            $table->string('allergy');            
-            $table->string('meal');            
+            $table->string('subject')->nullable();            
+            $table->string('shirt')->nullable();            
+            $table->string('allergy')->nullable();            
+            $table->string('meal')->nullable();            
             $table->string('type');            
-            $table->string('yr');            
-            $table->integer('address_id')->unsigned()->index();
+            $table->string('yr');
+            $table->string('region');                        
+            $table->integer('address_id')->unsigned()->index()->nullable();
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->integer('contact_id')->unsigned()->index();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
-            $table->integer('emgccontact_id')->unsigned()->index();
-            $table->foreign('emgccontact_id')->references('id')->on('emgccontacts')->onDelete('cascade');
             $table->timestamps();
         });
     }

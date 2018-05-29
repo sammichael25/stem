@@ -21,6 +21,7 @@ class CreateStudentsTable extends Migration
             $table->date('dob');
             $table->string('sex');
             $table->string('yeargroup');
+            $table->string('form');
             $table->integer('school_id')->unsigned()->index();
             $table->foreign('school_id')->references('id')->on('schools');
             $table->integer('address_id')->unsigned()->index();

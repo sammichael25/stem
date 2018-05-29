@@ -14,6 +14,7 @@ class Student extends Model
         'dob',
         'sex',
         'yeargroup',
+        'form',
         'school_id',
         'address_id',
         'contact_id',

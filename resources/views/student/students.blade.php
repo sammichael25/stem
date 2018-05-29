@@ -17,24 +17,31 @@
                         <table class="table" id="allStudentsDatatable" data-toggle="table" data-show-columns="true" data-search="true" data-show-toggle="true" data-show-export="true" data-pagination="true" data-buttons-class="info" data-export-options='{"fileName": "test"}' data-export-types="['csv', 'txt', 'sql', 'excel']">
                             <thead class="text-primary">
                             <th data-sortable="true" data-field="fname">First Name</th>
-                            <th data-sortable="true" data-field="mname">Middle Name</th>
                             <th data-sortable="true" data-field="lname">Last Name</th>
                             <th data-sortable="true" data-field="dob">DOB</th>
                             <th data-sortable="true" data-field="sex">Sex</th>
-                            <th>Action</th>
+                            <th data-sortable="true" data-field="form">Form</th>
+                            @if(auth()->user()->can('edit-student') || auth()->user()->can('delete-student'))
+                                <th>Action</th>
+                            @endif
                             </thead>
                             <tbody>
                             @foreach($students as $student)
                                 <tr>
                                     <td>{{ $student->fname }}</td>
-                                    <td>{{ $student->mname }}</td>
                                     <td>{{ $student->lname }}</td>
                                     <td>{{ $student->dob }}</td>
                                     <td>{{ $student->sex }}</td>
+                                    <td>{{ $student->form }}</td>
+                                    
                                     <td class="td-actions ">
+                                    @can('edit-student')
                                         <button type="button" onclick="edit({{$student->id}})" rel="tooltip" title="" class="btn btn-primary btn-simple btn-xs" data-original-title="Edit">
                                             <i class="material-icons">edit</i>
-                                            <div class="ripple-container"></div></button>
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                    @endcan
+                                    @can('delete-student')
                                         <button type="button" onclick="dprompt();"
                                                 rel="tooltip" title="" class="btn btn-danger btn-simple btn-xs" data-original-title="Remove">
                                             <i class="material-icons">close</i>
@@ -46,7 +53,9 @@
                                             {{csrf_field()}}
 
                                         </form>
+                                        @endcan
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                             </tbody>

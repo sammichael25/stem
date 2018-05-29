@@ -12,6 +12,8 @@
 */
 Auth::routes();
 Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('dashboard', 'HomeController@index');
 Route::get('students', 'StudentsController@index');
 Route::get('busaries/NCMA', 'BusariesController@ncma');
@@ -22,11 +24,7 @@ Route::get('/employees/supportStaff', 'EmployeesController@supportStaff');
 Route::get('/stemcenters/support', 'StemcentersController@support');
 Route::get('/stemcenters/technical', 'StemcentersController@technical');
 Route::get('/events', 'EventsController@index');
-//Route::put('/events/{events}', 'EventsController@update');
 
-
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('students', 'StudentsController');
 Route::resource('employees', 'EmployeesController');
@@ -34,7 +32,9 @@ Route::resource('stemcenters', 'StemcentersController');
 Route::resource('events', 'EventsController');
 
 
-
-
-Route::resource('admin/permission', 'Admin\\PermissionController');
-Route::resource('admin/role', 'Admin\\RoleController');
+Route::group(['middleware'=>'role:super-admin'],function(){
+    Route::get('/admin', 'Admin\\UserController@index');
+    Route::resource('admin/permission', 'Admin\\PermissionController');
+    Route::resource('admin/role', 'Admin\\RoleController');
+    Route::resource('admin/user', 'Admin\\UserController');
+});

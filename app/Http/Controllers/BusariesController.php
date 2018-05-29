@@ -27,7 +27,7 @@ class BusariesController extends Controller
     {
         //
         $students = Addition::join('students', 'additions.student_id', '=', 'students.id')->where('additions.btype', '=', 'NCMA')->get();
-        return view('student.students',['students'=>$students]);
+        return view('student.students',compact('students'));
     }
 
     public function ecma()

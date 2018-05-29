@@ -146,6 +146,7 @@ class StudentsController extends Controller
                 'sex'=> $request->input('sex'),
                 'dob'=> $request->input('dob'),
                 'yeargroup'=> $request->input('year_group'),
+                'form'=> $request->input('form'),
                 'school_id'=>$request->input('school'),
                 'address_id'=>$st_address->id,
                 'contact_id'=>$st_contact->id,
@@ -221,15 +222,25 @@ class StudentsController extends Controller
     {
         //
         $student = Student::where('id', $student->id )->first();
+        $count = 0;
+        foreach($student->pareent as $parent){
+            $count++;
+            if($count === 1){
+                $parent1 = $parent;
+                $parent2 = null;
+            }elseif($count === 2){
+                $parent2 = $parent;
+            }
+        }
         $schools = School::where('id','<','900')->orderBy('name', 'asc')->get();
         $cities = City::orderBy('name', 'asc')->get();
         $stemcenters = Stemcenter::orderBy('name', 'asc')->get();
-        $shirts = array("X-Small", "Small", "Medium", "Large", "X-Large");
+        $shirts = array("XS", "S", "M", "L", "XL","XXL");
         $meals = array("Vegetarian", "Vegan", "Meat", "Fish");
         $types = array("Busary", "Technical", "Academic");
         $btypes = array("NCMA", "ECMA", "Central Block");
         $relations = array("Mother", "Father", "Grandfather", "Grandmother","Aunt","Uncle","Brother","Sister","Guardian");
-        return view('student.student', compact('student', 'cities', 'schools', 'shirts','meals','types','btypes','relations','stemcenters'));
+        return view('student.student', compact('student', 'cities', 'schools', 'shirts','meals','types','btypes','relations','stemcenters','parent1','parent2'));
     }
 
     /**
@@ -358,6 +369,7 @@ class StudentsController extends Controller
                 'sex'=> $request->input('sex'),
                 'dob'=> $request->input('dob'),
                 'yeargroup'=> $request->input('year_group'),
+                'form'=> $request->input('form'),
                 'school_id'=>$request->input('school'),
                 'address_id'=>$student->address->id,
                 'contact_id'=>$student->contact->id,

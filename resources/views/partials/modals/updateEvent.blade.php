@@ -59,7 +59,7 @@
       </div>
       <div class="modal-footer text-center">
         <button id='close' type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
-        <button onclick="dprompt()" id="delete" type="button" class="btn btn-danger">Delete Event</button>
+        @can('delete-event')    <button onclick="dprompt()" id="delete" type="button" class="btn btn-danger">Delete Event</button>  @endcan
         <button onclick="update()" id="submit" type="button" class="btn btn-primary pull-left">Update</button>
       </div>
       </form>

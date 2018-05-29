@@ -17,15 +17,15 @@ class Employee extends Model
         'degree',
         'driver',
         'status',
-        'career',
+        'subject',
         'shirt',
         'allergy',
         'meal',
         'type',
         'yr',
+        'region',
         'address_id',
-        'contact_id',
-        'emgccontact_id'
+        'contact_id'
     ];
     
     public function Address(){
@@ -37,12 +37,6 @@ class Employee extends Model
     public function Contact(){
 
         return $this->belongsTo('App\Contact');
-
-    }
-
-    public function Emgccontact(){
-
-        return $this->belongsTo('App\Emgccontact');
 
     }
     

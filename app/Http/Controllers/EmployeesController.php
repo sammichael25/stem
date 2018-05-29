@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Address;
 use App\City;
-use App\Emgccontact;
 use App\Contact;
 
 use Illuminate\Http\Request;
@@ -77,20 +76,6 @@ class EmployeesController extends Controller
                 'type'=> 'Employee'
             ]);
 
-            $employeeEmgcContact = Contact::create([
-                'mobile1'=> $request->input('emgc_mobile'),       
-                'email1'=> $request->input('emgc_email'),        
-                'work'=> $request->input('emgc_work'),        
-                'type'=> 'Emergency'
-            ]);
-
-            $employeeEmgc = Emgccontact::create([
-                'fname'=> $request->input('emgc_fname'),
-                'lname'=> $request->input('emgc_lname'),
-                'relation'=> $request->input('relation'),
-                'contact_id'=>$employeeEmgcContact->id
-            ]);
-
             $employeeMember = Employee::create([
                 'fname'=> $request->input('fname'),
                 'mname'=> $request->input('mname'),
@@ -100,17 +85,17 @@ class EmployeesController extends Controller
                 'degree'=> $request->input('degree'),
                 'driver'=> $request->input('driver'),
                 'status'=> $request->input('status'),
-                'career'=> $request->input('career'),
+                'subject'=> $request->input('subject'),
                 'shirt'=> $request->input('t-shirt'),
                 'allergy'=> $request->input('allergy'),
                 'meal'=> $request->input('meal'),
                 'type'=> $request->input('s_type'),
                 'yr'=> $request->input('stem_yr'),
+                'region'=> $request->input('region'),
                 'address_id'=>$employeeAddress->id,
-                'contact_id'=>$employeeContact->id,
-                'emgccontact_id'=>$employeeEmgc->id
+                'contact_id'=>$employeeContact->id
             ]);
-        if($employeeAddress && $employeeContact && $employeeEmgcContact &&  $employeeEmgc && $employeeMember){
+        if($employeeAddress && $employeeContact && $employeeMember){
                 return redirect()->route('employees.create')
                     ->with('success','Staff Member added successfully');
             }
@@ -147,8 +132,8 @@ class EmployeesController extends Controller
         $shirts = array("X-Small", "Small", "Medium", "Large", "X-Large");
         $meals = array("Vegetarian", "Vegan", "Meat", "Fish");
         $types = array("Facilitator", "Support Staff");
-        $relations = array("Mother", "Father", "Grandfather", "Grandmother","Aunt","Uncle","Brother","Sister","Guardian");
-        return view('employee.edit',compact('employee','cities','shirts','meals','types','relations'));
+        $regions = array("North", "South","Both");
+        return view('employee.edit',compact('employee','cities','shirts','meals','types','regions'));
     }
 
     /**
@@ -181,22 +166,6 @@ class EmployeesController extends Controller
                 'type'=> 'Employee'
             ]);
 
-            $employeeEmgcContact = Contact::where('id', $employee->emgccontact->contact->id)
-            ->update([
-                'mobile1'=> $request->input('emgc_mobile'),       
-                'email1'=> $request->input('emgc_email'),        
-                'work'=> $request->input('emgc_work'),        
-                'type'=> 'Emergency'
-            ]);
-
-            $employeeEmgc = Emgccontact::where('id', $employee->emgccontact->id)
-            ->update([
-                'fname'=> $request->input('emgc_fname'),
-                'lname'=> $request->input('emgc_lname'),
-                'relation'=> $request->input('relation'),
-                'contact_id'=>$employee->emgccontact->contact->id
-            ]);
-
             $employee->update([
                 'fname'=> $request->input('fname'),
                 'mname'=> $request->input('mname'),
@@ -206,17 +175,17 @@ class EmployeesController extends Controller
                 'degree'=> $request->input('degree'),
                 'driver'=> $request->input('driver'),
                 'status'=> $request->input('status'),
-                'career'=> $request->input('career'),
+                'subject'=> $request->input('career'),
                 'shirt'=> $request->input('t-shirt'),
                 'allergy'=> $request->input('allergy'),
                 'meal'=> $request->input('meal'),
                 'type'=> $request->input('s_type'),
                 'yr'=> $request->input('stem_yr'),
+                'region'=> $request->input('region'),
                 'address_id'=>$employee->address->id,
-                'contact_id'=>$employee->contact->id,
-                'emgccontact_id'=>$employee->emgccontact->id
+                'contact_id'=>$employee->contact->id
             ]);
-        if($employeeAddress && $employeeContact && $employeeEmgcContact &&  $employeeEmgc && $employee){
+        if($employeeAddress && $employeeContact && $employee){
                 return redirect()->route('employees.edit', ['employee'=> $employee->id])
                     ->with('success','Staff Member successfully updated');
             }

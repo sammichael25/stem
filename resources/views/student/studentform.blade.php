@@ -165,6 +165,12 @@
                                                         <input type="text" name="year_group" value='2000' id = "datetimepicker2" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label for="form"  class="control-label">Form Class</label>
+                                                        <input type="text" name="form" id = "form" class="form-control"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="clearfix"></div>
@@ -439,11 +445,12 @@
                                                         <label class="control-label">T-Shirt Size</label>
                                                         <select id="t-shirt" class="form-control"  name="t-shirt">
                                                             <option hidden selected> Choose Size</option>
-                                                            <option value="X-Small">X-Small</option>
-                                                            <option value="Small">Small</option>
-                                                            <option value="Medium">Medium</option>
-                                                            <option value="Large">Large</option>
-                                                            <option value="X-Large">X-Large</option>
+                                                            <option value="XS">XS</option>
+                                                            <option value="S">S</option>
+                                                            <option value="M">M</option>
+                                                            <option value="L">L</option>
+                                                            <option value="XL">XL</option>
+                                                            <option value="XXL">XXL</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -530,6 +537,8 @@
                                                             <option value="Grandmother">Grandmother</option>
                                                             <option value="Aunt">Aunt</option>
                                                             <option value="Uncle">Uncle</option>
+                                                            <option value="Brother">Brother</option>
+                                                            <option value="Sister">Sister</option>
                                                             <option value="Guardian">Guardian</option>
                                                         </select>
                                                     </div>

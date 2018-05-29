@@ -32,12 +32,6 @@
                                                     STEM Info
                                                     <div class="ripple-container"></div></a>
                                             </li>
-                                            <li class="">
-                                                <a href="#tab4" data-toggle="tab">
-                                                    <i class="material-icons">local_hospital</i>
-                                                    Emergency Info
-                                                    <div class="ripple-container"></div></a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -65,7 +59,6 @@
                                                             name="mname"
                                                             id="employee-mname"
                                                             class="form-control"
-                                                            required="true"
                                                             spellcheck="false"
                                                             >
                                                     </div>
@@ -117,7 +110,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Address 1</label>
-                                                        <input type="text" class="form-control" required="true" name="add1">
+                                                        <input type="text" class="form-control"  name="add1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -238,8 +231,8 @@
                                         <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
-                                                        <label class="control-label">Career</label>
-                                                        <input name="career" id="career" type="text" class="form-control">
+                                                        <label class="control-label">Teaching Subject/Field of Interest</label>
+                                                        <input name="subject" id="subject" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -288,71 +281,25 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group label-floating">
                                                         <label for="datetimepicker2"  class="control-label">Year Joined</label>
                                                         <input type="text" name="stem_yr" value='2015' id = "datetimepicker2" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <br><hr><br>
-                                    </div>
-                                    <div class="tab-pane" id="tab4">
-                                        <fieldset>
-                                            <legend>Emergency Contact</legend>
-                                            <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group label-floating">
-                                                        <label for="" class="control-label">First Name</label>
-                                                        <input type="text" class="form-control" required="true" name="emgc_fname">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Last Name</label>
-                                                        <input type="text" class="form-control" required="true" name="emgc_lname">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label class="control-label">Relationship to Staff Member</label>
-                                                        <select name="relation" id="" class="form-control">
-                                                            <option hidden selected>Choose</option>
-                                                            <option value="Mother">Mother</option>
-                                                            <option value="Father">Father</option>
-                                                            <option value="Grandfather">Grandfather</option>
-                                                            <option value="Grandmother">Grandmother</option>
-                                                            <option value="Aunt">Aunt</option>
-                                                            <option value="Uncle">Uncle</option>
-                                                            <option value="Guardian">Guardian</option>
+                                                        <label class="control-label">Scheduled Regions</label>
+                                                        <select name="region" id="region" class="form-control">
+                                                            <option hidden selected>Choose a Region</option>
+                                                            <option value="North">North</option>
+                                                            <option value="South">South Staff</option>
+                                                            <option value="Both">Both Staff</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <hr>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Email</label>
-                                                        <input type="email" class="form-control" required="true" name="emgc_email">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Mobile</label>
-                                                        <input type="text" class="form-control" required="true" name="emgc_mobile">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Work</label>
-                                                        <input type="text" class="form-control" required="true" name="emgc_work">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                            <br><hr><br>
                                     </div>
                                     <ul class="pager wizard">
                                         <li class="previous first" style="display:none;"><a >First</a></li>
@@ -415,7 +362,7 @@
     <script>
         $(document).ready(function() {
             wiz();
-            setFormValidation('#RegisterValidationDoc');
+            //setFormValidation('#RegisterValidationDoc');
         });
         
         function wiz(){
@@ -435,14 +382,14 @@
 
             
         }
-
+/*
         function setFormValidation(id){
                 $(id).validate({
                     errorPlacement: function(error, element) {
                         $(element).parent('div').addClass('has-error');
                     }
                 });
-        }
+        }*/
         
     </script>
     <script src="{{ url('js/bootstrap.min.js') }}"></script>    

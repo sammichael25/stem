@@ -60,7 +60,6 @@
                                                             id="student-fname"
                                                             value="{{$student->fname}}"
                                                             class="form-control"
-                                                            required="true"
                                                             spellcheck="false"
                                                         >
                                                     </div>
@@ -73,7 +72,6 @@
                                                             id="student-mname"
                                                             value="{{$student->mname}}"
                                                             class="form-control"
-                                                            required="true"
                                                             spellcheck="false"
                                                         >
                                                     </div>
@@ -86,7 +84,6 @@
                                                             id="student-lname"
                                                             value="{{$student->lname}}"
                                                             class="form-control"
-                                                            required="true"
                                                             spellcheck="false"
                                                         >
                                                     </div>
@@ -126,7 +123,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Address 1</label>
-                                                        <input type="text" value="{{$student->address->address1}}" class="form-control" required="true" name="add1">
+                                                        <input type="text" value="{{$student->address->address1}}" class="form-control" name="add1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -178,6 +175,12 @@
                                                         <input type="text" name="year_group" value='2000' id = "datetimepicker2" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group label-floating">
+                                                        <label for="form"  class="control-label">Form Class</label>
+                                                        <input type="text" value="{{$student->form}}" name="form" id = "form" class="form-control"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="clearfix"></div>
@@ -190,13 +193,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">First Name</label>
-                                                            <input type="text" value="{{$student->pareent[0]->pfname}}" name="pfname1" id="parent-pfname1" class="form-control" required="true" spellcheck="false" > 
+                                                            <input type="text" value="{{$parent1->pfname}}" name="pfname1" id="parent-pfname1" class="form-control" spellcheck="false" > 
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Last Name</label>
-                                                            <input type="text" value="{{$student->pareent[0]->plname}}" name="plname1" id="parent-plname1" class="form-control" required="true" spellcheck="false" > 
+                                                            <input type="text" value="{{$parent1->plname}}" name="plname1" id="parent-plname1" class="form-control" spellcheck="false" > 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
@@ -226,13 +229,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Address 1</label> 
-                                                            <input type="text" value="{{$student->pareent[0]->address->address1}}" class="form-control" required="true" name="1add1"> 
+                                                            <input type="text" value="{{$parent1->address->address1}}" class="form-control" name="1add1"> 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating"> 
                                                             <label class="control-label">Address 2</label> 
-                                                            <input type="text" value="{{$student->pareent[0]->address->address2}}" class="form-control" required="true" name="2add1"> 
+                                                            <input type="text" value="{{$parent1->address->address2}}" class="form-control" name="2add1"> 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
@@ -242,8 +245,8 @@
                                                                 <option selected hidden>Choose City</option>
                                                                 @foreach($cities as $city)
 
-                                                                @if($student->pareent[0]->address->city->id === $city->id)
-                                                                    <option selected value="{{$student->pareent[0]->address->city->id}}">{{$city->name}}</option>
+                                                                @if($parent1->address->city->id === $city->id)
+                                                                    <option selected value="{{$parent1->address->city->id}}">{{$city->name}}</option>
                                                                 @else
                                                                     <option  value="{{$city->id}}">{{$city->name}}</option>
                                                                 @endif
@@ -263,13 +266,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">First Name</label>
-                                                            <input type="text" value="{{$student->pareent[1]->pfname}}" name="pfname2" id="parent-pfname2" class="form-control" spellcheck="false" > 
+                                                            <input type="text" @if($parent2 != null)value="{{$parent2->pfname}}"@endif name="pfname2" id="parent-pfname2" class="form-control" spellcheck="false" > 
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Last Name</label>
-                                                            <input type="text" value="{{$student->pareent[1]->plname}}" name="plname2" id="parent-plname2" class="form-control" spellcheck="false" > 
+                                                            <input type="text" @if($parent2 != null)value="{{$parent2->plname}}"@endif name="plname2" id="parent-plname2" class="form-control" spellcheck="false" > 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
@@ -299,13 +302,13 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Address 1</label> 
-                                                            <input type="text" value="{{$student->pareent[1]->address->address1}}" class="form-control" name="1add2"> 
+                                                            <input type="text" @if($parent2 != null)value="{{$parent2->address->address1}}"@endif class="form-control" name="1add2"> 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating"> 
                                                             <label class="control-label">Address 2</label> 
-                                                            <input type="text" value="{{$student->pareent[1]->address->address2}}" class="form-control" name="2add2"> 
+                                                            <input type="text" @if($parent2 != null)value="{{$parent2->address->address2}}"@endif class="form-control" name="2add2"> 
                                                         </div> 
                                                     </div>
                                                     <div class="col-md-4">
@@ -315,8 +318,8 @@
                                                                 <option selected hidden>Choose City</option>
                                                                 @foreach($cities as $city)
 
-                                                                @if($student->pareent[1]->address->city->id === $city->id)
-                                                                    <option selected value="{{$student->pareent[1]->address->city->id}}">{{$city->name}}</option>
+                                                                @if($parent2 != null && $parent2->address->city->id === $city->id)
+                                                                    <option selected value="{{$parent2->address->city->id}}">{{$city->name}}</option>
                                                                 @else
                                                                     <option  value="{{$city->id}}">{{$city->name}}</option>
                                                                 @endif
@@ -357,19 +360,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Mobile 1</label>
-                                                            <input value="{{$student->pareent[0]->contact->mobile1}}" name="1mobile1" type="text" class="form-control">
+                                                            <input value="{{$parent1->contact->mobile1}}" name="1mobile1" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Mobile 2</label>
-                                                            <input value="{{$student->pareent[0]->contact->mobile2}}" name="2mobile1" type="text" class="form-control">
+                                                            <input value="{{$parent1->contact->mobile2}}" name="2mobile1" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Home</label>
-                                                            <input value="{{$student->pareent[0]->contact->home}}" name="home1" type="text" class="form-control">
+                                                            <input value="{{$parent1->contact->home}}" name="home1" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -380,19 +383,19 @@
                                                         <div class="col-md-4">
                                                             <div class="form-group label-floating">
                                                                 <label class="control-label">Work</label>
-                                                                <input value="{{$student->pareent[0]->contact->work}}" name="work1" type="text" class="form-control">
+                                                                <input value="{{$parent1->contact->work}}" name="work1" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group label-floating">
                                                                 <label class="control-label">Email 1</label>
-                                                                <input value="{{$student->pareent[0]->contact->email1}}" name="1email1" type="text" class="form-control">
+                                                                <input value="{{$parent1->contact->email1}}" name="1email1" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                                 <div class="form-group label-floating">
                                                                 <label class="control-label">Email 2</label>
-                                                                <input value="{{$student->pareent[0]->contact->email2}}" name="2email1" type="text" class="form-control">
+                                                                <input value="{{$parent1->contact->email2}}" name="2email1" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -406,19 +409,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Mobile 1</label>
-                                                            <input value="{{$student->pareent[1]->contact->mobile1}}" name="1mobile2" type="text" class="form-control">
+                                                            <input @if($parent2 != null)value="{{$parent2->contact->mobile1}}"@endif name="1mobile2" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Mobile 2</label>
-                                                            <input value="{{$student->pareent[1]->contact->mobile2}}" name="2mobile2" type="text" class="form-control">
+                                                            <input @if($parent2 != null)value="{{$parent2->contact->mobile2}}"@endif name="2mobile2" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group label-floating">
                                                             <label class="control-label">Home</label>
-                                                            <input value="{{$student->pareent[1]->contact->home}}" name="home2" type="text" class="form-control">
+                                                            <input @if($parent2 != null)value="{{$parent2->contact->home}}"@endif name="home2" type="text" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -429,19 +432,19 @@
                                                         <div class="col-md-4">
                                                             <div class="form-group label-floating">
                                                                 <label class="control-label">Work</label>
-                                                                <input value="{{$student->pareent[1]->contact->work}}" name="work2" type="text" class="form-control">
+                                                                <input @if($parent2 != null)value="{{$parent2->contact->work}}"@endif name="work2" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group label-floating">
                                                                 <label class="control-label">Email 1</label>
-                                                                <input value="{{$student->pareent[1]->contact->email1}}" name="1email2" type="text" class="form-control">
+                                                                <input @if($parent2 != null)value="{{$parent2->contact->email1}}"@endif name="1email2" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                                 <div class="form-group label-floating">
                                                                 <label class="control-label">Email 2</label>
-                                                                <input value="{{$student->pareent[1]->contact->email2}}" name="2email2" type="text" class="form-control">
+                                                                <input @if($parent2 != null)value="{{$parent2->contact->email2}}"@endif name="2email2" type="text" class="form-control">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -554,13 +557,13 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="" class="control-label">First Name</label>
-                                                        <input value="{{$student->emgccontact->fname}}" type="text" class="form-control" required="true" name="emgc_fname">
+                                                        <input value="{{$student->emgccontact->fname}}" type="text" class="form-control" name="emgc_fname">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="" class="control-label">Last Name</label>
-                                                        <input value="{{$student->emgccontact->lname}}" type="text" class="form-control" required="true" name="emgc_lname">
+                                                        <input value="{{$student->emgccontact->lname}}" type="text" class="form-control" name="emgc_lname">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -588,19 +591,19 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="" class="control-label">Email</label>
-                                                        <input value="{{$student->emgccontact->contact->email1}}" type="email" class="form-control" required="true" name="emgc_email">
+                                                        <input value="{{$student->emgccontact->contact->email1}}" type="email" class="form-control" name="emgc_email">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="" class="control-label">Mobile</label>
-                                                        <input value="{{$student->emgccontact->contact->mobile1}}" type="text" class="form-control" required="true" name="emgc_mobile">
+                                                        <input value="{{$student->emgccontact->contact->mobile1}}" type="text" class="form-control" name="emgc_mobile">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="" class="control-label">Work</label>
-                                                        <input value="{{$student->emgccontact->contact->work}}" type="text" class="form-control" required="true" name="emgc_work">
+                                                        <input value="{{$student->emgccontact->contact->work}}" type="text" class="form-control" name="emgc_work">
                                                     </div>
                                                 </div>
                                             </div>
@@ -683,10 +686,12 @@
     <script>
         $(document).ready(function() {
             wiz();
-            setFormValidation('#UpdateValidationDoc');
+            //setFormValidation('#UpdateValidationDoc');
             radio_button_check("{{$student->sex}}");
-            radio_button_check2("{{$student->pareent[0]->type}}");
-            radio_button_check3("{{$student->pareent[1]->type}}");
+            radio_button_check2("{{$parent1->type}}");
+            @if($parent2 != null)
+                radio_button_check3("{{$parent2->type}}");
+            @endif
             busaryType("{{$student->addition->type}}");
             uwiCheck("{{$student->school->name}}");
         });

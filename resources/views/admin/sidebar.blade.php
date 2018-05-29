@@ -9,16 +9,22 @@
                                     Dashboard
                                 </a>
                             </li>
-
                             <li role="presentation">
-                                <a href="/admin/permission">
-                                    Permissions
+                                <a href="/admin/user">
+                                    Users
+                                </a>
+                            </li>
+
+                            
+                            <li role="presentation">
+                                <a href="/admin/role">
+                                    Roles
                                 </a>
                             </li>
 
                             <li role="presentation">
-                                <a href="/admin/role">
-                                    Roles
+                                <a href="/admin/permission">
+                                    Permissions
                                 </a>
                             </li>
                         </ul>

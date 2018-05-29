@@ -13,8 +13,12 @@
                 <div class="card card-calendar">
                     <div class="card-body ">
                         <div id='calendar'></div>
-                        @include('partials.modals.createEvent')
-                        @include('partials.modals.updateEvent')
+                        @if(auth()->user()->can('add-event'))
+                            @include('partials.modals.createEvent')
+                        @endif
+                        @if(auth()->user()->can('edit-event') || auth()->user()->can('delete-event'))
+                                @include('partials.modals.updateEvent')
+                        @endif
                     </div>
                 </div>
             </div>
@@ -26,8 +30,8 @@
 @section('javascripts')
     <script src="{{ url('js/jquery.min.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/moment.min.js') }}" type="text/javascript"></script>
-//    <script src="{{ url('js/fullcalendar.js') }}" type="text/javascript"></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js' type="text/javascript"></script>
+    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js' type="text/javascript"></script>
     <script src="{{ url('js/scheduler.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/gcal.js') }}" type="text/javascript"></script>
     <script src="{{ url('js/material.min.js') }}"></script>
@@ -63,19 +67,55 @@
                 eventColor: 'blue',
                 selectable:true,
                 editable: true,
+                contentHeight: 580,
                 handleWindowResize :true,
+                eventResize: function(event, delta, revertFunc) {
+                    @can('edit-event')
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            type:'POST',
+                            url: '/events/' + event.id,
+                            dataType:"html",
+                            data: {
+                                '_method' : 'PUT',
+                                'title': event.title,
+                                'start_date': event.start.format(),
+                                'end_date': event.end.format(),
+                                'color': event.color
+                            },
+                            success: function(response){
+                                response = JSON.parse(response);
+                                showNotification('top','center',response.success,'success');
+                            },
+                            error: function(response){
+                                response = JSON.parse(response);
+                                console.log(response);
+                                $("#updateEvent").modal("hide");
+                                showNotification('top','center',response.error,'danger');
+                            }
+                        });
+                    @endcan
+                },
                 eventClick: function(calEvent, jsEvent, view) {
-                    $('#updateEvent').modal();
-                    $(function () {
-                        $('#color2').colorpicker({"color": calEvent.color});
-                    });
-                    $(".modal-body #eventsUpdate #event_id").val(calEvent.id);
-                    $(".modal-body #eventsUpdate #title").val(calEvent.title);
-                    $(".modal-body #eventsUpdate #start_date").val(calEvent.start.format());
-                    $(".modal-body #eventsUpdate #end_date").val(calEvent.end.format());
-                    $(".modal-body #eventsUpdate #color2").val(calEvent.color);
+                    @can('edit-event')
+                        $('#updateEvent').modal();
+                        $(function () {
+                            $('#color2').colorpicker({"color": calEvent.color});
+                        });
+                        $(".modal-body #eventsUpdate #event_id").val(calEvent.id);
+                        $(".modal-body #eventsUpdate #title").val(calEvent.title);
+                        $(".modal-body #eventsUpdate #start_date").val(calEvent.start.format());
+                        $(".modal-body #eventsUpdate #end_date").val(calEvent.end.format());
+                        $(".modal-body #eventsUpdate #color2").val(calEvent.color);
+                    @endcan
                 },
                 eventDrop: function(event, delta, revertFunc) {
+                    @can('edit-event')
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -104,6 +144,7 @@
                             showNotification('top','center',response.error,'danger');
                         }
                     });
+                    @endcan
                 },
                 events:[
                     @foreach($events as $event)
@@ -118,14 +159,18 @@
                 ],
                 
                 dayClick: function(date, jsEvent, view) {
+                    @can('add-event')
                     $('#createEvent').modal();
                     $(".modal-body #start_date").val(date.format());
                     $(".modal-body #end_date").val(date.format());
+                    @endcan
                 },
                 select: function(startDate, endDate) {
+                    @can('add-event')
                     $('#createEvent').modal();
                     $(".modal-body #start_date").val(startDate.format());
                     $(".modal-body #end_date").val(endDate.format());
+                    @endcan
                 }
             });
         } );

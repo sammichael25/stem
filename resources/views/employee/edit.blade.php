@@ -32,12 +32,6 @@
                                                     STEM Info
                                                     <div class="ripple-container"></div></a>
                                             </li>
-                                            <li class="">
-                                                <a href="#tab4" data-toggle="tab">
-                                                    <i class="material-icons">local_hospital</i>
-                                                    Emergency Info
-                                                    <div class="ripple-container"></div></a>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -67,7 +61,6 @@
                                                             id="employee-mname"
                                                             value="{{$employee->mname}}"
                                                             class="form-control"
-                                                            required="true"
                                                             spellcheck="false"
                                                             >
                                                     </div>
@@ -120,7 +113,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Address 1</label>
-                                                        <input type="text" value="{{$employee->address->address1}}" class="form-control" required="true" name="add1">
+                                                        <input type="text" value="{{$employee->address->address1}}" class="form-control"  name="add1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -247,8 +240,8 @@
                                         <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
-                                                        <label class="control-label">Career</label>
-                                                        <input name="career" value="{{$employee->career}}" id="career" type="text" class="form-control">
+                                                        <label class="control-label">Teaching Subject/Field of Interest</label>
+                                                        <input name="subject" value="{{$employee->subject}}" id="subject" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -313,42 +306,23 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group label-floating">
                                                         <label for="datetimepicker2"  class="control-label">Year Joined</label>
                                                     <input type="text" name="stem_yr" value="{{$employee->yr}}" id = "datetimepicker2" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <br><hr><br>
-                                    </div>
-                                    <div class="tab-pane" id="tab4">
-                                        <fieldset>
-                                            <legend>Emergency Contact</legend>
-                                            <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group label-floating">
-                                                        <label for="" class="control-label">First Name</label>
-                                                        <input type="text" value="{{$employee->emgccontact->fname}}" class="form-control" required="true" name="emgc_fname">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Last Name</label>
-                                                        <input type="text" value="{{$employee->emgccontact->lname}}" class="form-control" required="true" name="emgc_lname">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label class="control-label">Relationship to Staff Member</label>
-                                                        <select name="relation" id="relation" class="form-control">
-                                                            <option hidden>Choose</option>
-                                                            @foreach($relations as $relation)
+                                                        <label class="control-label">Scheduled Regions</label>
+                                                        <select name="region" id="region" class="form-control">
+                                                            <option hidden>Choose a Region</option>
+                                                            @foreach($regions as $region)
 
-                                                                @if($employee->emgccontact->relation === $relation)
-                                                                    <option selected value="{{$employee->emgccontact->relation}}">{{$relation}}</option>
+                                                                @if($employee->region === $region)
+                                                                    <option selected value="{{$employee->region}}">{{$region}}</option>
                                                                 @else
-                                                                    <option  value="{{$relation}}">{{$relation}}</option>
+                                                                    <option  value="{{$region}}">{{$region}}</option>
                                                                 @endif
 
                                                             @endforeach
@@ -356,30 +330,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <br>
-                                            <hr>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Email</label>
-                                                        <input type="email" value="{{$employee->emgccontact->contact->email1}}" class="form-control" required="true" name="emgc_email">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Mobile</label>
-                                                        <input type="text" value="{{$employee->emgccontact->contact->mobile1}}" class="form-control" required="true" name="emgc_mobile">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group label-floating">
-                                                        <label for="" class="control-label">Work</label>
-                                                        <input type="text" value="{{$employee->emgccontact->contact->work}}" class="form-control" required="true" name="emgc_work">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
+                                            <br><hr><br>
                                     </div>
                                     <ul class="pager wizard">
                                         <li class="previous first" style="display:none;"><a >First</a></li>
@@ -442,7 +393,7 @@
     <script>
         $(document).ready(function() {
             wiz();
-            setFormValidation('#UpdateValidationDoc');
+            //setFormValidation('#UpdateValidationDoc');
             radio_button_check("{{$employee->sex}}");
             radio_button_check2("{{$employee->driver}}");
             radio_button_check3("{{$employee->status}}");
@@ -465,14 +416,14 @@
 
             
         }
-
+/*
         function setFormValidation(id){
                 $(id).validate({
                     errorPlacement: function(error, element) {
                         $(element).parent('div').addClass('has-error');
                     }
                 });
-        }
+        }*/
 
         function radio_button_check(sex){
                 if (sex === 'Male') {
