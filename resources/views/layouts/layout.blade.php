@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <base href="{{ URL::asset('/') }}" target="_top">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ url('img/STEM.png') }}">
-    <link rel="icon" type="image/png" href="{{ url('img/favicon.png') }}" >
+    <link rel="icon" type="image/png" href="{{ url('img/favicon.ico') }}" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
