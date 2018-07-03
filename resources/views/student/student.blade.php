@@ -136,7 +136,7 @@
                                                     <div class="form-group label-floating">
                                                         <label  for="student-address-city" class="control-label">City</label>
                                                         <select class="form-control" name="city" id="student-address-city">
-                                                            <option selected hidden>Choose City</option>
+                                                            <option value="30" selected hidden>Choose City</option>
                                                             @foreach($cities as $city)
 
                                                                 @if($student->address->city_id === $city->id)
@@ -172,7 +172,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="datetimepicker2"  class="control-label">Year Group</label>
-                                                        <input type="text" name="year_group" value='2000' id = "datetimepicker2" class="form-control datetimepicker"/>
+                                                        <input type="text" name="year_group" value="{{$student->yeargroup}}" id = "datetimepicker2" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -242,7 +242,7 @@
                                                         <div class="form-group label-floating"> 
                                                             <label  for="student-address-city1" class="control-label">City</label>
                                                             <select class="form-control" name="city1" id="student-address-city1">
-                                                                <option selected hidden>Choose City</option>
+                                                                <option value="30" selected hidden>Choose City</option>
                                                                 @foreach($cities as $city)
 
                                                                 @if($parent1->address->city->id === $city->id)
@@ -315,7 +315,7 @@
                                                         <div class="form-group label-floating"> 
                                                             <label  for="student-address-city2" class="control-label">City</label>
                                                             <select class="form-control" name="city2" id="student-address-city2">
-                                                                <option selected hidden>Choose City</option>
+                                                                <option value="30" selected hidden>Choose City</option>
                                                                 @foreach($cities as $city)
 
                                                                 @if($parent2 != null && $parent2->address->city->id === $city->id)
@@ -466,7 +466,7 @@
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">T-Shirt Size</label>
                                                         <select id="t-shirt" class="form-control"  name="t-shirt">
-                                                            <option hidden> Choose Size</option>
+                                                            <option value="M" hidden> Choose Size</option>
                                                             @foreach($shirts as $shirt)
 
                                                                 @if($student->addition->shirt === $shirt)
@@ -494,7 +494,7 @@
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Meal Preference</label>
                                                         <select name="meal" id="meal" class="form-control">
-                                                            <option hidden>Choose</option>
+                                                            <option value="" hidden>Choose</option>
                                                             @foreach($meals as $meal)
 
                                                                 @if($student->addition->meal === $meal)
@@ -511,7 +511,7 @@
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Student Type</label>
                                                         <select onchange="busaryType2(this)" name="s_type" id="s_type" class="form-control">
-                                                            <option hidden>Choose Type</option>
+                                                            <option value="" hidden>Choose Type</option>
                                                             @foreach($types as $type)
 
                                                                 @if($student->addition->type === $type)
@@ -527,7 +527,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group label-floating">
                                                         <label for="datetimepicker2"  class="control-label">Stem Year</label>
-                                                        <input type="text" name="stem_yr" value='2000' id = "datetimepicker3" class="form-control datetimepicker"/>
+                                                        <input type="text" name="stem_yr" value="{{$student->addition->yr}}" id = "datetimepicker3" class="form-control datetimepicker"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -755,8 +755,8 @@
                 htmlstr = '<div class="col-md-4" id="binsert">';
                     htmlstr += '<div class="form-group label-floating">';
                         htmlstr += '<label class="control-label">Busary Group</label>';
-                        htmlstr += '<select name="busary_type" id="busary_type" class="form-control">';
-                            htmlstr += '<option hidden>Choose Type</option>';
+                        htmlstr += '<select  name="busary_type" id="busary_type" class="form-control">';
+                            htmlstr += '<option value="" hidden>Choose Type</option>';
                             htmlstr += '@foreach($btypes as $btype)';
                                 htmlstr += '@if($student->addition->btype === $btype)';
                                     htmlstr += '<option selected value="{{$student->addition->btype}}">{{$btype}}</option>';
@@ -790,7 +790,7 @@
                     htmlstr += '<div class="form-group label-floating">';
                         htmlstr += '<label class="control-label">Busary Group</label>';
                         htmlstr += '<select name="busary_type" id="busary_type" class="form-control">';
-                            htmlstr += '<option hidden>Choose Type</option>';
+                            htmlstr += '<option value="" hidden>Choose Type</option>';
                             htmlstr += '@foreach($btypes as $btype)';
                                 htmlstr += '@if($student->addition->btype === $btype)';
                                     htmlstr += '<option selected value="{{$student->addition->btype}}">{{$btype}}</option>';

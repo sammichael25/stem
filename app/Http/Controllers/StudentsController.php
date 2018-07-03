@@ -83,9 +83,9 @@ class StudentsController extends Controller
                 'address_id'=> $paddress->id,
                 'contact_id'=> $pcontact->id
             ]);
+            $parent2 = null;
 
-
-            if(($request->input('pfname2')!= null) && ($request->input('plname2')!= null) ){
+            if(($request->input('pfname2')!= null) && ($request->input('plname2')!= null) && ($request->input('pfname2')!= "") && ($request->input('plname2')!= "") ){
                 $paddress2 = Address::create([
                     'address1'=> $request->input('1add2'),
                     'address2'=> $request->input('2add2'),
@@ -155,7 +155,10 @@ class StudentsController extends Controller
 
             $student = Student::find($student->id);
             $student->pareent()->attach($parent->id);
-            $student->pareent()->attach($parent2->id);
+            if($parent2 != null){
+                $student->pareent()->attach($parent2->id);
+            }
+            
 
             $addition = Addition::create([
                 'career'=> $request->input('career'),
@@ -204,13 +207,13 @@ class StudentsController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    /*public function show(Student $student)
     {
         //Both would work
         $student = Student::where('id', $student->id )->first();
         //$student = Student::find($student->id);
         return view('student.student',['student'=>$student]);
-    }
+    }*/
 
     /**
      * Show the form for editing the specified resource.
@@ -222,17 +225,28 @@ class StudentsController extends Controller
     {
         //
         $student = Student::where('id', $student->id )->first();
-        $count = 0;
+        /*$count = 1;
         foreach($student->pareent as $parent){
-            $count++;
-            if($count === 1){
+            
+            if($count < 2){
                 $parent1 = $parent;
                 $parent2 = null;
-            }elseif($count === 2){
+            }else{
                 $parent2 = $parent;
             }
+            $count++;
+        }*/
+
+        $count = count($student->pareent);
+        if($count < 2 ){
+                $parent1 = $student->pareent[0];
+                $parent2 = null;
+        }else{
+                $parent1 = $student->pareent[0];
+                $parent2 = $student->pareent[1];
         }
-        $schools = School::where('id','<','900')->orderBy('name', 'asc')->get();
+
+        $schools = School::whereNotBetween('id', [900, 999])->orderBy('name', 'asc')->get();
         $cities = City::orderBy('name', 'asc')->get();
         $stemcenters = Stemcenter::orderBy('name', 'asc')->get();
         $shirts = array("XS", "S", "M", "L", "XL","XXL");
@@ -300,35 +314,65 @@ class StudentsController extends Controller
                 'contact_id'=> $student->pareent[0]->contact->id
             ]);
 
+            if(($request->input('pfname2')!= null) && ($request->input('plname2')!= null) && ($request->input('pfname2')!= "") && ($request->input('plname2')!= "") ){
+                /*$paddress2 = Address::updateOrCreate(
+                    ['id'=>$student->pareent[1]->address->id],
+                    [''=>'']
+                );*/
+                if(count($student->pareent) > 1){
+                    $paddress2 = Address::where('id', $student->pareent[1]->address->id)
+                    ->update([
+                        'address1'=> $request->input('1add2'),
+                        'address2'=> $request->input('2add2'),
+                        'city_id'=> $request->input('city2'),
+                        'type'=> 'Parent'
+                    ]);
 
-            if(($request->input('pfname2')!= null) && ($request->input('plname2')!= null) ){
-                $paddress2 = Address::where('id', $student->pareent[1]->address->id)
-                ->update([
-                    'address1'=> $request->input('1add2'),
-                    'address2'=> $request->input('2add2'),
-                    'city_id'=> $request->input('city2'),
-                    'type'=> 'Parent'
-                ]);
+                    $pcontact2 = Contact::where('id', $student->pareent[1]->contact->id)
+                    ->update([
+                        'mobile1'=> $request->input('1mobile2'),
+                        'mobile2'=> $request->input('2mobile2'),       
+                        'home'=> $request->input('home2'),
+                        'work'=> $request->input('work2'),       
+                        'email1'=> $request->input('1email2'),
+                        'email2'=> $request->input('2email2'),
+                        'type'=> 'Parent'
+                    ]);
 
-                $pcontact2 = Contact::where('id', $student->pareent[1]->contact->id)
-                ->update([
-                    'mobile1'=> $request->input('1mobile2'),
-                    'mobile2'=> $request->input('2mobile2'),       
-                    'home'=> $request->input('home2'),
-                    'work'=> $request->input('work2'),       
-                    'email1'=> $request->input('1email2'),
-                    'email2'=> $request->input('2email2'),
-                    'type'=> 'Parent'
-                ]);
+                    $parent2 = Pareent::where('id', $student->pareent[1]->id)
+                    ->update([
+                        'pfname'=> $request->input('pfname2'),
+                        'plname'=> $request->input('plname2'),
+                        'type'=> $request->input('type2'),
+                        'address_id'=> $student->pareent[1]->address->id,
+                        'contact_id'=> $student->pareent[1]->contact->id
+                    ]);
+                }else{
+                    $paddress2 = Address::create([
+                        'address1'=> $request->input('1add2'),
+                        'address2'=> $request->input('2add2'),
+                        'city_id'=> $request->input('city2'),
+                        'type'=> 'Parent'
+                    ]);
 
-                $parent2 = Pareent::where('id', $student->pareent[1]->id)
-                ->update([
-                    'pfname'=> $request->input('pfname2'),
-                    'plname'=> $request->input('plname2'),
-                    'type'=> $request->input('type2'),
-                    'address_id'=> $student->pareent[1]->address->id,
-                    'contact_id'=> $student->pareent[1]->contact->id
-                ]);
+                    $pcontact2 = Contact::create([
+                        'mobile1'=> $request->input('1mobile2'),
+                        'mobile2'=> $request->input('2mobile2'),       
+                        'home'=> $request->input('home2'),
+                        'work'=> $request->input('work2'),       
+                        'email1'=> $request->input('1email2'),
+                        'email2'=> $request->input('2email2'),
+                        'type'=> 'Parent'
+                    ]);
+
+                    $parent2 = Pareent::create([
+                        'pfname'=> $request->input('pfname2'),
+                        'plname'=> $request->input('plname2'),
+                        'type'=> $request->input('type2'),
+                        'address_id'=> $paddress2->id,
+                        'contact_id'=> $pcontact2->id
+                    ]);
+                }
             }
             
             $st_address = Address::where('id', $student->address->id)
@@ -376,8 +420,11 @@ class StudentsController extends Controller
                 'emgccontact_id'=>$student->emgccontact->id
             ]);
 
-            $student->pareent()->attach($student->pareent[0]->id);
-            $student->pareent()->attach($student->pareent[1]->id);
+            if(($request->input('pfname2')!= null) && ($request->input('plname2')!= null) && ($request->input('pfname2')!= "") && ($request->input('plname2')!= "") ){
+                if(count($student->pareent) === 1){
+                    $student->pareent()->attach($parent2->id);
+                }
+            }
 
             $addition = Addition::where('id', $student->addition->id)
             ->update([
